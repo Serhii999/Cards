@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex">
+        <div class="ml-auto p-2">
+            <form method="get" action="{% url 'main' %}">
+                <button type="submit" class="btn btn-success" value="Base page">Вернуться на главную страницу
+                </button>
+            </form>
+        </div>
+    </div>
+    {% for product in object_list %}
+
+                    <div style="color: whitesmoke">
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <img src="/media/{{ product.photo }}" width="150" height="150" >
+                            </div>
+                            <div class="p-2">
+                                <h2 style="color: #e4b101">{{ product.name }}</h2>
+                                <p>Surname: {{ product.surname }}</p>
+                                <p>Country: {{ product.country }}</p>
+                                <p>City: {{ product.city }}</p>
+                                <p>Avenue: {{ product.avenue }}</p>
+                                <p>Phone number: {{ product.phone_number}} ₴</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                <hr style="background-color: #e4b101">
+            {% endfor %}
+
+
+{% endblock %}

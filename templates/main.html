@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div style="color: #e4b101; position: center; text-align: center">
+      <h1>Personal Cards</h1></div>
+    <br>
+
+  {% if  request.user.is_superuser %}
+     <div class="alert alert-warning" role="alert">
+                <div class="d-flex">
+                    <div class="p-2">Приветствую, {{ request.user }}!</div>
+                    <div class="ml-auto p-2">
+                        <form method="get" action="{% url 'logout' %}">
+                            <button type="submit" class="btn btn-outline-danger" value="Logout"> Выйти из
+                                аккаунта
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+     {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <br>
+
+        <br>
+        <br>
+
+{% endif %}
+     <form method="get" action= "{% url 'card_create' %}">
+
+
+                <button type="submit" class="btn btn-warning" value="Update"> Create card </button>
+            </form>
+    <br>
+<form action="{% url 'search' %}" method="get">
+  <input name="q" type="text" placeholder="Search...">
+ <button type="submit" class="btn btn-success" value="Base page">Search
+                </button>
+</form>
+    <br>
+    {% for product in object_list %}
+
+                    <div style="color: whitesmoke">
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <img src="/media/{{ product.photo }}" width="150" height="150">
+                            </div>
+                            <div class="p-2">
+                                <h2 style="color: #e4b101"> Name:{{ product.name }}</h2>
+                                <p>Surname: {{ product.surname}}</p>
+                                <p>Country: {{ product.country}}</p>
+                                <p>City: {{ product.city}}</p>
+                                <p>Avenue: {{ product.avenue}}</p>
+                                <p>Phone number: {{ product.phone_number}}</p>
+                                {% if request.user.is_superuser  %}
+                                <p><div class="ml-auto p-2">
+                            <form method="post" action="{% url 'delete' product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning" value="Update"> Delete card</button>
+                            </form>
+                        </div></p>
+                                       <p>
+                            <form method="get" action="{% url 'update' product.pk %}">
+
+
+                                <button type="submit" class="btn btn-warning" value="Update"> Update card</button>
+                            </form>
+                        </p>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                <hr style="background-color: #e4b101">
+            {% endfor %}
+
+{% endblock %}
